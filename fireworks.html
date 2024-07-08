@@ -1,0 +1,45 @@
+<html>
+  <head>
+  </head>
+  <body>
+    <div><canvas id="fw_canvas" width="640" height="480"></canvas></div>
+    <div><textarea id="fw_textarea" rows="24" cols="80"></textarea></div>
+    <button id="update_button" type="button">Update</button>
+  </body>
+  <script type="module">
+    import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.166.1/build/three.module.js";
+
+    const scene = new THREE.Scene();
+    const canvas = document.getElementById("fw_canvas");
+    const camera = new THREE.PerspectiveCamera( 75, canvas.width / canvas.height, 0.1, 1000 );
+
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas });
+    renderer.setSize(canvas.width, canvas.height);
+
+    renderer.setAnimationLoop( animate );
+
+    const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+    const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+    const cube = new THREE.Mesh( geometry, material );
+    scene.add( cube );
+
+    camera.position.z = 5;
+
+    let t = performance.now();
+    
+    function animate() {
+	let dt = performance.now() - t;
+	t += dt;
+	cube.rotation.x += dt*0.001;
+	cube.rotation.y += dt*0.001;
+
+	renderer.render( scene, camera );
+    }
+
+    document.getElementById("update_button").addEventListener('click', update);
+
+    function update() {
+	material.color.set(document.getElementById("fw_textarea").value);
+    }
+  </script>
+</html>
