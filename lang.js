@@ -11,12 +11,14 @@ export function fw_eval(userdata) {
     for (const item of userdata) {
 	new Particle(
 	    item.start_t,
-	    item.end_t,
+	    item.duration,
 	    new THREE.Vector3(item.start_v[0],item.start_v[1],item.start_v[2]),
 	    new THREE.Vector3(item.start_p[0],item.start_p[1],item.start_p[2]),
 	    item.size,
 	    item.color,
-	    item.drag
+	    item.coast,
+	    item.grow,
+	    item.fade
 	);
     }
 }
