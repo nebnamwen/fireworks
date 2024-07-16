@@ -1,15 +1,26 @@
 import * as THREE from "./node_modules/three/build/three.module.js";
 
-const gravity = 9.8;
-const Y = new THREE.Vector3(0,1,0);
-    
 const scene = new THREE.Scene();
 const canvas = document.getElementById("fw_canvas");
 const camera = new THREE.PerspectiveCamera( 75, canvas.width / canvas.height, 0.1, 1000 );
+camera.position.z = 5;
 
 const renderer = new THREE.WebGLRenderer({ canvas: canvas });
 renderer.setSize(canvas.width, canvas.height);
 
+renderer.setAnimationLoop( animate );
+
+let t = performance.now();
+
+function animate() {
+    let dt = performance.now() - t;
+    t += dt;
+    update(dt * playspeed * 0.001);
+    renderer.render( scene, camera );
+}
+
+const gravity = 9.8;
+const Y = new THREE.Vector3(0,1,0);    
 const sphere_geom = new THREE.IcosahedronGeometry(1,1);
 
 class Particle {
@@ -63,12 +74,35 @@ class Particle {
     }
 }
 
-renderer.setAnimationLoop( animate );
-
-camera.position.z = 5;
-
 const slider = document.getElementById("slider");
 const sliderlabel = document.getElementById("sliderlabel");
+
+slider.addEventListener('input', slide);    
+
+function slide() {
+    jump(slider.value);
+}
+    
+document.getElementById("play_button").addEventListener('click', play);
+
+function play() {
+    t = performance.now();
+    playspeed = 1.0;
+}
+    
+document.getElementById("pause_button").addEventListener('click', pause);
+
+function pause() {
+    t = performance.now();
+    playspeed = 0;
+}
+    
+document.getElementById("rewind_button").addEventListener('click', rewind);
+
+function rewind() {
+    t = performance.now();
+    playspeed = -1.0;
+}
     
 // set of current particles
 const activeparticles = new Set();
@@ -78,15 +112,6 @@ let timelineindex = 0;
 let T = 0;
 let playspeed = 0;
     
-let t = performance.now();
-
-function animate() {
-    let dt = performance.now() - t;
-    t += dt;
-    update(dt * playspeed * 0.001);
-    renderer.render( scene, camera );
-}
-
 function update(dt) {
     let dir = Math.sign(dt)
     T += dt;
@@ -126,44 +151,27 @@ function jump(t) {
     update(t - T);
 }
 
-slider.addEventListener('input', slide);    
-
-function slide() {
-    jump(slider.value);
-}
-    
-document.getElementById("play_button").addEventListener('click', play);
-
-function play() {
-    t = performance.now();
-    playspeed = 1.0;
-}
-    
-document.getElementById("pause_button").addEventListener('click', pause);
-
-function pause() {
-    t = performance.now();
-    playspeed = 0;
-}
-    
-document.getElementById("rewind_button").addEventListener('click', rewind);
-
-function rewind() {
-    t = performance.now();
-    playspeed = -1.0;
-}
-    
 document.getElementById("compile_button").addEventListener('click', recompile);
 
 function recompile() {
-    let userdata = JSON.parse(document.getElementById("fw_textarea").value);
-    
     activeparticles.clear();
     timeline.length = 0;
+
+    fw_eval(JSON.parse(document.getElementById("fw_textarea").value));
+    
+    timeline.sort(comparetime);
+    slider.max = timeline[timeline.length - 1].time;
+
     T = 0;
     timelineindex = 0;
     playspeed = 0;
+}
 
+function comparetime(a, b) {
+    return a.time - b.time;
+}
+
+function fw_eval(userdata) {
     /*
 [
 {"start_t": 0, "end_t": 2, "start_v": [0,0,0], "start_p": [0,0,0], "color": "white", "size": 1, "drag": 0.1},
@@ -181,12 +189,5 @@ function recompile() {
 	    item.drag
 	);
     }
-
-    timeline.sort(comparetime);
-    console.log(timeline);
-    slider.max = timeline[timeline.length - 1].time;
 }
 
-function comparetime(a, b) {
-    return a.time - b.time;
-}
