@@ -1,17 +1,30 @@
 <html>
   <head>
+    <style>
+      input[type="range"] {
+	  width: 600px;
+      }
+
+      button {
+	  font-weight: bold;
+      }
+    </style>
   </head>
   <body>
     <div><canvas id="fw_canvas" width="640" height="480"></canvas></div>
     <div>
-      <button id="compile_button" type="button">Compile</button>
-      <button id="play_button" type="button">Play</button>
-      <button id="pause_button" type="button">Pause</button>
-      <button id="rewind_button" type="button">Rewind</button>
-    </div>
-    <div>
       <input id="slider" type="range" min="0" max="100" step = "0.1" value="0">
       <label id="sliderlabel" for="slider">0:00</label>
+    </div>
+    <div>
+      <button id="compile_button" title="compile">&larrhk;</button>
+      <button id="skipback_button" title="skip back">|&lt;&lt;</button>
+      <button id="fastback_button" title="rewind">&lt;&lt;</button>
+      <button id="rewind_button" title="reverse">&lt;</button>
+      <button id="pause_button" title="pause">||</button>
+      <button id="play_button" title="play">&gt;</button>
+      <button id="fast_button" title="fast forward">&gt;&gt;</button>
+      <button id="skip_button" title="skip">&gt;&gt;|</button>
     </div>
     <div><textarea id="fw_textarea" rows="24" cols="80">[
 {"start_t": 0, "end_t": 2, "start_v": [0,0,0], "start_p": [0,0,0], "color": "white", "size": 1, "drag": 0.1},

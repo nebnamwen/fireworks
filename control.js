@@ -7,7 +7,7 @@ slider.addEventListener('input', slide);
 function slide() {
     jump(slider.value);
 }
-    
+
 document.getElementById("play_button").addEventListener('click', play);
 
 function play() {
@@ -24,6 +24,32 @@ document.getElementById("rewind_button").addEventListener('click', rewind);
 
 function rewind() {
     timeline.speed = -1.0;
+}
+
+document.getElementById("fast_button").addEventListener('click', fast);
+
+function fast() {
+    timeline.speed = 5.0;
+}
+
+document.getElementById("fastback_button").addEventListener('click', fastback);
+
+function fastback() {
+    timeline.speed = -5.0;
+}
+
+document.getElementById("skip_button").addEventListener('click', skip);
+
+function skip() {
+    if (timeline.events.length > 0) {
+	jump(timeline.events[timeline.events.length - 1].time);
+    }
+}
+
+document.getElementById("skipback_button").addEventListener('click', skip);
+
+function skip() {
+    jump(0);
 }
 
 document.getElementById("compile_button").addEventListener('click', recompile);
