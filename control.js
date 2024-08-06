@@ -46,15 +46,18 @@ function skip() {
     }
 }
 
-document.getElementById("skipback_button").addEventListener('click', skip);
+document.getElementById("skipback_button").addEventListener('click', skipback);
 
-function skip() {
+function skipback() {
     jump(0);
 }
 
 document.getElementById("compile_button").addEventListener('click', recompile);
 
 function recompile() {
+    skipback();
+    timeline.speed = 0;
+
     timeline.particles.clear();
     timeline.events.length = 0;
 
@@ -62,10 +65,6 @@ function recompile() {
     
     timeline.events.sort(comparetime);
     slider.max = timeline.events[timeline.events.length - 1].time;
-
-    timeline.T = 0;
-    timeline.index = 0;
-    timeline.speed = 0;
 }
 
 function comparetime(a, b) {
