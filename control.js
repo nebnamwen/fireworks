@@ -64,7 +64,13 @@ function recompile() {
     fw_eval(JSON.parse(document.getElementById("fw_textarea").value));
     
     timeline.events.sort(comparetime);
-    slider.max = timeline.events[timeline.events.length - 1].time;
+    let last_event = timeline.events[timeline.events.length - 1];
+    if (last_event) {
+	slider.max = last_event.time;
+    }
+    else {
+	slider.max = 0;
+    }
 }
 
 function comparetime(a, b) {

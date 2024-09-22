@@ -32,6 +32,10 @@ export class Particle {
 	);
     }
 
+    start() { return this.start_t; }
+
+    end() { return this.end_t; }
+
     velocity(t) {
 	let dt = t - this.start_t;
 	let esdt = Math.exp(-dt/this.coast);
