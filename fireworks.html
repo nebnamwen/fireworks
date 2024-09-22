@@ -26,28 +26,29 @@
       <button id="fast_button" title="fast forward">&gt;&gt;</button>
       <button id="skip_button" title="skip">&gt;&gt;|</button>
     </div>
-    <div><textarea id="fw_textarea" rows="24" cols="80">[
-  { "_HEAD": "at_time", "time": { "_HEAD": "number", "value": 0 }, "body": [
+    <div><textarea id="fw_textarea" rows="24" cols="80">
+[
+  { "_HEAD": "at_time", "time": 0, "body": [
     { "_HEAD": "at_point", "point": { "_HEAD": "vector", "x": 0, "y": -5, "z": 0 }, "body": [
       { "_HEAD": "particle",
-        "duration": { "_HEAD": "number", "value": 2 },
+        "duration": 2, 
         "velocity": { "_HEAD": "vector", "x": 0, "y": 12, "z": 0 },
-        "size": { "_HEAD": "number", "value": 1 },
+        "size": 1,
         "color": { "_HEAD": "color", "name": "lime" },
         "children": [
           { "_HEAD": "finally", "body": [
             { "_HEAD": "sphere",
               "name": "vec",
               "axis": { "_HEAD": "vector", "x": 0, "y": 1, "z": 0 },
-              "count": { "_HEAD": "number", "value": 15 },
+              "count": 15,
               "body": { "_HEAD": "particle",
-                "duration": { "_HEAD": "number", "value": 2 },
+                "duration": 2,
                 "velocity": { "_HEAD": "product",
-                  "s": { "_HEAD": "number", "value": 15 },
+                  "s": 15,
                   "v": { "_HEAD": "lookup_var", "name": "vec" } },
-                "size": { "_HEAD": "number", "value": 0.25 },
+                "size": 0.25,
                 "color": { "_HEAD": "color", "name": "magenta" },
-                "fade": { "_HEAD": "number", "value": 1 }
+                "fade": 1
               }
             }
           ] }

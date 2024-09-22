@@ -188,6 +188,9 @@ function eval_clause(expr, env) {
 }
 
 function eval_number(expr, env) {
+    if (typeof expr === "number") {
+	return expr;
+    }
     if (expr._HEAD == "number") {
 	// { _HEAD: "number", value: number (literal) }
 	return expr.value;
