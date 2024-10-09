@@ -1,0 +1,70 @@
+[
+  { "_HEAD": "at_time", "time": 0, "body": [
+    { "_HEAD": "at_point", "point": { "_HEAD": "vector", "x": 0, "y": -5, "z": -5 }, "body": [
+      { "_HEAD": "particle",
+        "duration": 1.7, 
+        "velocity": { "_HEAD": "vector", "x": 0, "y": 12, "z": 0 },
+        "size": 0.5,
+        "color": { "_HEAD": "color", "name": "gray" },
+        "children": [
+          { "_HEAD": "finally", "body": [
+            { "_HEAD": "particle",
+              "duration": 0.15,
+              "velocity": { "_HEAD": "vector", "constant": "ZERO" },
+              "size": 25,
+              "color": { "_HEAD": "color", "name": "yellow" },
+              "grow": 3,
+              "fade": 0.15
+            },
+            { "_HEAD": "sphere",
+              "name": "vec",
+              "axis": { "_HEAD": "vector", "x": 0, "y": 1, "z": 0 },
+              "count": 55,
+              "body": { "_HEAD": "particle",
+                "duration": { "_HEAD": "sum", "a": 0.5, "b": { "_HEAD": "random", "range": 0.5 } },
+                "velocity": { "_HEAD": "product",
+                  "s": 15,
+                  "v": { "_HEAD": "lookup_var", "name": "vec" }
+                },
+                "size": 0.15,
+                "color": { "_HEAD": "color", "hex": "#F0F" },
+                "coast": 0.5,
+                "children": { "_HEAD": "finally", "body": { "_HEAD": "particle",
+                  "duration": 0.15,
+                  "velocity": { "_HEAD": "vector", "constant": "ZERO" },
+                  "size": 10,
+                  "color": { "_HEAD": "color", "name": "white" },
+                  "grow": 3,
+                  "fade": 0.05
+                } }
+              }
+            },
+            { "_HEAD": "sphere",
+              "name": "vec",
+              "axis": { "_HEAD": "vector", "x": 0, "y": 1, "z": 0 },
+              "count": 12,
+              "body": { "_HEAD": "particle",
+                "duration": 1,
+                "velocity": { "_HEAD": "product",
+                  "s": 18,
+                  "v": { "_HEAD": "lookup_var", "name": "vec" }
+                },
+                "size": 0.15,
+                "color": { "_HEAD": "color", "name": "lime" },
+                "coast": 1,
+                "children": { "_HEAD": "every", "interval": 0.03, "body": { "_HEAD": "particle",
+                  "duration": 0.5,
+                  "velocity": { "_HEAD": "vector", "constant": "ZERO" },
+                  "size": 0.3,
+                  "color": { "_HEAD": "color", "name": "yellow" },
+                  "grow": 0.8,
+                  "fade": 0.25,
+                  "coast": 0.01
+                } }
+              } }
+          ] }
+        ]
+      }
+    ] }
+  ] }
+]
